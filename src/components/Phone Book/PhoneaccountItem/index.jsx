@@ -7,11 +7,11 @@ import { confirmAlert } from 'react-confirm-alert';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import randomColor from 'randomcolor';
 import Avatar from 'react-avatar';
-import { deletePhoneNote } from '../../../context/reducer';
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import CreatePhoneNoteModal from '../CreatePhoneNoteModal';
+import CreatePhoneNoteModal from '../PhoneAccountCreationModal';
 
-const PhoneNoteItem = ({ phoneNote, dispatch }) => {
+const PhoneAccountItem = ({ phoneAccount, dispatch }) => {
+  // refactor
   const deleteSubmit = () => {
     confirmAlert({
       customUI: ({ onClose }) => (
@@ -21,7 +21,7 @@ const PhoneNoteItem = ({ phoneNote, dispatch }) => {
           <Button
             color="secondary"
             onClick={() => {
-              dispatch(deletePhoneNote(phoneNote));
+              dispatch({ type: 'DELETE_PHONE_ACCOUNT', payload: phoneAccount });
               onClose();
             }}
           >
@@ -33,15 +33,15 @@ const PhoneNoteItem = ({ phoneNote, dispatch }) => {
   };
 
   return (
-    <ListItem key={phoneNote.id} alignItems="flex-start">
-      <Avatar color={randomColor()} name={phoneNote.name} size="40" src={phoneNote.avatar} />
-      <ListItemText primary={phoneNote.surname} />
-      <ListItemText primary={phoneNote.phone} />
+    <ListItem key={phoneAccount.id} alignItems="flex-start">
+      <Avatar color={randomColor()} name={phoneAccount.name.charAt(0)} size="40" src={phoneAccount.avatar} />
+      <ListItemText primary={phoneAccount.surname} />
+      <ListItemText primary={phoneAccount.phone} />
       <ListItemSecondaryAction>
-        <CreatePhoneNoteModal dispatch={dispatch} phoneNote={phoneNote} buttonTitle="EDIT" />
+        <CreatePhoneNoteModal phoneAccount={phoneAccount} dispatch={dispatch} buttonTitle="EDIT" />
         <Button color="secondary" onClick={deleteSubmit}>DELETE </Button>
       </ListItemSecondaryAction>
     </ListItem>
   );
 };
-export default PhoneNoteItem;
+export default PhoneAccountItem;

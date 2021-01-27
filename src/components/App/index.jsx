@@ -1,16 +1,16 @@
 import './style.scss';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect } from 'react';
+import { useReducerAsync } from 'use-reducer-async';
+import { ModalProvider } from 'react-modal-hook';
 import { PhoneBookContext, initialState, phoneBookReducer } from '../../context/reducer';
 import PhoneBook from '../Phone Book';
-import { initDB } from '../../dexieDB';
+import asyncActionHandlers from '../../context/asyncHandlers';
 
 const App = () => {
-  const [state, dispatch] = useReducer(phoneBookReducer, initialState);
+  const [state, dispatch] = useReducerAsync(phoneBookReducer, initialState, asyncActionHandlers);
 
   useEffect(() => {
-    initDB().then(() => {
-      console.log('db was initialized');
-    });
+    dispatch({ type: 'LOAD_ACCOUNTS' });
   }, []);
 
   return (
@@ -18,9 +18,12 @@ const App = () => {
       <header>
         <h1>PHONE BOOK APP</h1>
       </header>
-      <PhoneBookContext.Provider value={{ dispatch, state }}>
-        <PhoneBook />
-      </PhoneBookContext.Provider>
+      <ModalProvider ariaHideApp={false}>
+        <PhoneBookContext.Provider value={{ dispatch, state }}>
+          <PhoneBook />
+        </PhoneBookContext.Provider>
+      </ModalProvider>
+
     </div>
   );
 };

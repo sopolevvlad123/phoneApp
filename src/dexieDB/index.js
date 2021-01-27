@@ -1,16 +1,14 @@
 import Dexie from 'dexie';
-import mockAccounts from './MOCK_DATA.json';
+import mockData from './MOCK_DATA.json';
 
-export const db = new Dexie('phoneBookAppDB');
+export const PHONE_TAB = 'phoneAccount';
+
+const db = new Dexie(PHONE_TAB);
 
 db.version(1).stores({
   phoneAccount: '++id,name,surname,phone,avatar,email',
 });
 
-export const initDB = async () => {
-  await db.phoneAccount.bulkPut(mockAccounts);
-};
+db.table(PHONE_TAB).bulkPut(mockData);
 
-/* initDB(mockAccounts).catch((err) => {
-  console.log('Failed to create init accounts', err);
-}); */
+export default db;

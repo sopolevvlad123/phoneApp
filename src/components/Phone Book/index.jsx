@@ -2,21 +2,20 @@ import './style.scss';
 import List from '@material-ui/core/List';
 import React, { useContext } from 'react';
 import { PhoneBookContext } from '../../context/reducer';
-import PhoneNoteItem from './PhoneNoteElement';
-import CreatePhoneNoteModal from './CreatePhoneNoteModal';
+import PhoneAccountItem from './PhoneaccountItem';
+import PhoneAccountCreationModal from './PhoneAccountCreationModal';
 
 const PhoneBook = () => {
   const { state, dispatch } = useContext(PhoneBookContext);
-
   return (
     <div>
       <List className="phoneBook">
-        {state.phoneData.map((phoneNote) => (
-          <PhoneNoteItem phoneNote={phoneNote} dispatch={dispatch} />
+        {state.phoneAccounts.map((phoneAccount) => (
+          <PhoneAccountItem phoneAccount={phoneAccount} dispatch={dispatch} />
         ))}
       </List>
       <div className="createModal">
-        <CreatePhoneNoteModal dispatch={dispatch} buttonTitle="CREATE" />
+        <PhoneAccountCreationModal dispatch={dispatch} buttonTitle="CREATE" />
       </div>
     </div>
   );

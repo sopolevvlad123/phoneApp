@@ -1,54 +1,61 @@
 import React from 'react';
-import phoneData from '../dexieDB/MOCK_DATA.json';
 
 export const PhoneBookContext = React.createContext(null);
 
-const ADD_PHONE_NOTE = 'ADD_PHONE_NOTE';
-const UPDATE_PHONE_NOTE = 'UPDATE_PHONE_NOTE';
-const DELETE_PHONE_NOTE = 'DELETE_PHONE_NOTE';
+const ADD_PHONE_ACCOUNT = 'ADD_PHONE_ACCOUNT';
+const UPDATE_PHONE_ACCOUNT = 'UPDATE_PHONE_NOTE';
+const DELETE_PHONE_ACCOUNT = 'DELETE_PHONE_NOTE';
+const ADD_ACCOUNTS = 'ADD_INIT_ACCOUNTS';
 
-export const addPhoneNote = (phoneNote) => ({
-  type: ADD_PHONE_NOTE,
-  payload: phoneNote,
+export const addPhoneAccount = (phoneAccount) => ({
+  type: ADD_PHONE_ACCOUNT,
+  payload: phoneAccount,
 });
 
-export const updatePhoneNote = (phoneNote) => ({
-  type: UPDATE_PHONE_NOTE,
-  payload: phoneNote,
+export const updatePhoneAccount = (phoneAccount) => ({
+  type: UPDATE_PHONE_ACCOUNT,
+  payload: phoneAccount,
 });
 
-export const deletePhoneNote = (phoneNote) => ({
-  type: DELETE_PHONE_NOTE,
-  payload: phoneNote,
+export const deletePhoneAccount = (phoneAccount) => ({
+  type: DELETE_PHONE_ACCOUNT,
+  payload: phoneAccount,
+});
+
+export const addAccounts = (phoneAccount) => ({
+  type: ADD_ACCOUNTS,
+  payload: phoneAccount,
 });
 
 export const initialState = {
-  phoneData,
+  phoneAccounts: [],
 };
 
 export const phoneBookReducer = (state, action) => {
   switch (action.type) {
-    case ADD_PHONE_NOTE:
+    case ADD_ACCOUNTS: return { phoneAccounts: action.payload };
+    case ADD_PHONE_ACCOUNT:
       return {
-        phoneData: [
-          ...state.phoneData,
-          {
-            ...action.payload,
-            id: state.phoneData[state.phoneData.length - 1].id + 1,
-          },
+        phoneAccounts: [
+          ...state.phoneAccounts,
+          action.payload,
         ],
       };
-    case UPDATE_PHONE_NOTE:
+    case UPDATE_PHONE_ACCOUNT: {
+      const index = state.phoneAccounts.findIndex((x) => x.id === action.payload.id);
       return {
-        ...state,
-        ...action.payload,
+        phoneAccounts: [
+          ...state.phoneAccounts.slice(0, index),
+          action.payload,
+          ...state.phoneAccounts.slice(index + 1),
+        ],
       };
-    case DELETE_PHONE_NOTE:
+    }
+    case DELETE_PHONE_ACCOUNT:
       return {
-        phoneData: [...state.phoneData.filter((phoneNote) => phoneNote.id !== action.payload.id)],
+        phoneAccounts: [...state.phoneAccounts.filter((phoneNote) => phoneNote.id !== action.payload.id)],
       };
     default:
       return state;
   }
 };
-
