@@ -6,6 +6,7 @@ const ADD_PHONE_ACCOUNT = 'ADD_PHONE_ACCOUNT';
 const UPDATE_PHONE_ACCOUNT = 'UPDATE_PHONE_NOTE';
 const DELETE_PHONE_ACCOUNT = 'DELETE_PHONE_NOTE';
 const ADD_ACCOUNTS = 'ADD_INIT_ACCOUNTS';
+const SET_ACTIVE_ACCOUNT_INFO = 'SET_ACTIVE_ACCOUNT_INFO';
 
 export const addPhoneAccount = (phoneAccount) => ({
   type: ADD_PHONE_ACCOUNT,
@@ -27,8 +28,14 @@ export const addAccounts = (phoneAccount) => ({
   payload: phoneAccount,
 });
 
+export const showActiveAccountInfo = (phoneAccountID) => ({
+  type: SET_ACTIVE_ACCOUNT_INFO,
+  payload: phoneAccountID,
+});
+
 export const initialState = {
   phoneAccounts: [],
+  activeAccountID: null,
 };
 
 export const phoneBookReducer = (state, action) => {
@@ -55,6 +62,10 @@ export const phoneBookReducer = (state, action) => {
     case DELETE_PHONE_ACCOUNT:
       return {
         phoneAccounts: [...state.phoneAccounts.filter((phoneNote) => phoneNote.id !== action.payload.id)],
+      };
+    case SET_ACTIVE_ACCOUNT_INFO:
+      return {
+        activeAccountID: action.payload,
       };
     default:
       return state;

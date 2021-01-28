@@ -9,6 +9,7 @@ import randomColor from 'randomcolor';
 import Avatar from 'react-avatar';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import CreatePhoneNoteModal from '../PhoneAccountCreationModal';
+import { showActiveAccountInfo } from '../../../context/reducer';
 
 const PhoneAccountItem = ({ phoneAccount, dispatch }) => {
   // refactor
@@ -32,8 +33,12 @@ const PhoneAccountItem = ({ phoneAccount, dispatch }) => {
     });
   };
 
+  const showAccountInfo = () => {
+    dispatch(showActiveAccountInfo(phoneAccount.id));
+  };
+
   return (
-    <ListItem key={phoneAccount.id} alignItems="flex-start">
+    <ListItem key={phoneAccount.id} alignItems="flex-start" button onClick={showAccountInfo}>
       <Avatar color={randomColor()} name={phoneAccount.name.charAt(0)} size="40" src={phoneAccount.avatar} />
       <ListItemText primary={phoneAccount.surname} />
       <ListItemText primary={phoneAccount.phone} />
