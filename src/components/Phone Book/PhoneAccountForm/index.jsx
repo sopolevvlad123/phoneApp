@@ -7,7 +7,7 @@ const PhoneNoteForm = ({ phoneAccount, dispatch, hideModal }) => {
   const [imgURL, setImgUrl] = useState(null);
 
   useEffect(() => {
-    setImgUrl(phoneAccount.avatar);
+    setImgUrl(phoneAccount?.avatar);
   }, []);
 
   const onSubmit = (data) => {
@@ -79,7 +79,7 @@ const PhoneNoteForm = ({ phoneAccount, dispatch, hideModal }) => {
 
       <div>
         <label htmlFor="avatar">
-          {phoneAccount.avatar ? 'Change ' : 'Add '}
+          {phoneAccount?.avatar ? 'Change ' : 'Add '}
           Avatar
         </label>
         <input
