@@ -61,10 +61,12 @@ export const phoneBookReducer = (state, action) => {
     }
     case DELETE_PHONE_ACCOUNT:
       return {
+        ...state,
         phoneAccounts: [...state.phoneAccounts.filter((phoneNote) => phoneNote.id !== action.payload.id)],
       };
     case SET_ACTIVE_ACCOUNT_INFO:
       return {
+        ...state,
         activeAccountID: action.payload,
       };
     default:

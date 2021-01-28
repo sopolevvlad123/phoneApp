@@ -5,7 +5,7 @@ import PhoneAccountItem from './PhoneaccountItem';
 import PhoneAccountCreationModal from './PhoneAccountCreationModal';
 import ActiveAccountInfoTab from './ActiveAccountInfoTab';
 
-const PhoneBook = ({ phoneAccounts, dispatch }) => (
+const PhoneBook = ({ phoneAccounts, dispatch, activeAccount }) => (
   <div className="phoneBookContainer">
     <div className="phoneBook">
       <List className="phoneBookList">
@@ -17,7 +17,8 @@ const PhoneBook = ({ phoneAccounts, dispatch }) => (
         <PhoneAccountCreationModal dispatch={dispatch} buttonTitle="CREATE" />
       </div>
     </div>
-    <ActiveAccountInfoTab />
+    {activeAccount
+      && <ActiveAccountInfoTab activeAccount={activeAccount} />}
   </div>
 );
 export default PhoneBook;
