@@ -85,6 +85,7 @@ const PhoneNoteForm = ({ phoneAccount, dispatch, hideModal }) => {
         <input
           type="file"
           name="avatar"
+          accept=".gif,.jpg,.jpeg,.png,"
           onChange={(e) => handleImageChange(e)}
         />
         <div>
