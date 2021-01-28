@@ -20,7 +20,7 @@ const App = () => {
       </header>
       <ModalProvider ariaHideApp={false}>
         <PhoneBookContext.Provider value={{ dispatch, state }}>
-          <PhoneBook />
+          <PhoneBook phoneAccounts={state.phoneAccounts} dispatch={dispatch} />
         </PhoneBookContext.Provider>
       </ModalProvider>
 

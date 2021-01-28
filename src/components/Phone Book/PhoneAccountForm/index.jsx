@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import './style.scss';
 
 const PhoneNoteForm = ({ phoneAccount, dispatch, hideModal }) => {
   const { register, handleSubmit, errors } = useForm();
+  const [imgURL, setImgUrl] = useState(null);
+
+  useEffect(() => {
+    setImgUrl(phoneAccount.avatar);
+  }, []);
 
   const onSubmit = (data) => {
-    dispatch({ type: 'SAVE_PHONE_ACCOUNT', payload: { ...data, id: phoneAccount?.id } });
+    dispatch({ type: 'SAVE_PHONE_ACCOUNT', payload: { ...data, id: phoneAccount?.id, avatar: imgURL } });
     hideModal();
+  };
+
+  const handleImageChange = (e) => {
+    e.preventDefault();
+    const reader = new FileReader();
+    const targetFile = e.target.files[0];
+    reader.onloadend = () => {
+      setImgUrl(reader.result);
+    };
+    reader.readAsDataURL(targetFile);
   };
 
   return (
@@ -61,9 +76,23 @@ const PhoneNoteForm = ({ phoneAccount, dispatch, hideModal }) => {
         {errors.phone?.type === 'required' && 'Phone is required'}
         {errors.phone?.type === 'pattern' && 'Phone number is incorrect'}
       </div>
+
+      <div>
+        <label htmlFor="avatar">
+          {phoneAccount.avatar ? 'Change ' : 'Add '}
+          Avatar
+        </label>
+        <input
+          type="file"
+          name="avatar"
+          onChange={(e) => handleImageChange(e)}
+        />
+        <div>
+          {imgURL && <img src={imgURL} alt="" />}
+        </div>
+      </div>
       <input type="submit" />
     </form>
-
   );
 };
 

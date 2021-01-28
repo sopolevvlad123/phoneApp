@@ -44,6 +44,7 @@ export const phoneBookReducer = (state, action) => {
     case UPDATE_PHONE_ACCOUNT: {
       const index = state.phoneAccounts.findIndex((x) => x.id === action.payload.id);
       return {
+        ...state,
         phoneAccounts: [
           ...state.phoneAccounts.slice(0, index),
           action.payload,
