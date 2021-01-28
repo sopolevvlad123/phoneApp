@@ -1,7 +1,6 @@
 import './style.scss';
 import React, { useEffect } from 'react';
 import { useReducerAsync } from 'use-reducer-async';
-import { ModalProvider } from 'react-modal-hook';
 import { PhoneBookContext, initialState, phoneBookReducer } from '../../context/reducer';
 import PhoneBook from '../Phone Book';
 import asyncActionHandlers from '../../context/asyncHandlers';
@@ -18,12 +17,9 @@ const App = () => {
       <header>
         <h1>PHONE BOOK APP</h1>
       </header>
-      <ModalProvider ariaHideApp={false}>
-        <PhoneBookContext.Provider value={{ dispatch, state }}>
-          <PhoneBook />
-        </PhoneBookContext.Provider>
-      </ModalProvider>
-
+      <PhoneBookContext.Provider value={{ dispatch, state }}>
+        <PhoneBook phoneAccounts={state.phoneAccounts} dispatch={dispatch} activeAccountID={state.activeAccountID} />
+      </PhoneBookContext.Provider>
     </div>
   );
 };
